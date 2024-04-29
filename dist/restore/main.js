@@ -56402,13 +56402,17 @@ async function restore(inputs, cacheArchiveFile = "action-cache-dospaces.tar.gz"
     console.log(
       `Restoring cache with key ${safeKeyToRestoreKey[relevantSafeKey]}`
     );
+    console.timeEnd("Downloading file");
     await downloadFile(
       createClient(inputs.config),
       inputs.config,
       relevantSafeKey,
       cacheArchiveFile
     );
+    console.timeEnd("Downloading file");
+    console.time("Extracting tar file");
     await extractTarFile(cacheArchiveFile, process.cwd());
+    console.timeEnd("Extracting tar file");
   } else {
     console.warn("No relevant cache to restore");
   }
