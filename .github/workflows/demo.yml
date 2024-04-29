@@ -1,0 +1,36 @@
+name: Demo
+
+on:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # if possible these paths will be restored from a previous cache
+      # in addition, a cache entry will be created for these paths after the job ends
+      - name: Register cachable paths
+        uses: tombailey/action-cache-dospaces@v0.1
+        with:
+          bucket: ${{ secrets.SPACES_BUCKET }}
+          endpoint: ${{ secrets.SPACES_ENDPOINT }}
+          accessKeyId: ${{ secrets.SPACES_ACCESS_KEY_ID }}
+          secretAccessKey: ${{ secrets.SPACES_SECRET_ACCESS_KEY }}
+          paths: |
+            example.txt
+          # for v0.2, the first key that exists will be restored so specify keys in order of preference
+          restoreKeys: |
+            demo-${{ runner.os }}-${{ github.head_ref || github.ref_name }}
+            demo-${{ runner.os }}-develop
+            demo-${{ runner.os }}-main
+          # will be saved after the action completes
+          saveKey: demo-${{ runner.os }}-${{ github.head_ref || github.ref_name }}
+
+      - name: Output previously cached content
+        run: cat example.txt || echo "example.txt not found"
+
+      - name: Create cachable content
+        run: date > example.txt
