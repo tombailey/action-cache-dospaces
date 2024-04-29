@@ -56374,6 +56374,7 @@ function createTarFile(inputFilePaths, filePath, gzip = true) {
 var import_untildify = __toESM(require_untildify());
 var fs = __toESM(require("node:fs"));
 async function save(inputs, cacheArchiveFile = "action-cache-dospaces.tar.gz") {
+  console.time("Creating tar file");
   await createTarFile(
     inputs.paths.map((filePath) => {
       return filePath.startsWith("~") ? (0, import_untildify.default)(filePath) : filePath;
@@ -56382,12 +56383,15 @@ async function save(inputs, cacheArchiveFile = "action-cache-dospaces.tar.gz") {
     }),
     cacheArchiveFile
   );
+  console.timeEnd("Creating tar file");
+  console.time("Uploading file");
   await uploadFile(
     createClient(inputs.config),
     inputs.config,
     createSafeKey(inputs.saveKey, inputs.config.bucketPathPrefix),
     cacheArchiveFile
   );
+  console.timeEnd("Uploading file");
 }
 
 // src/save/main.ts

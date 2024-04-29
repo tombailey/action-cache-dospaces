@@ -8,6 +8,7 @@ export async function save(
   inputs: SaveInputs,
   cacheArchiveFile = "action-cache-dospaces.tar.gz",
 ) {
+  console.time("Creating tar file");
   await createTarFile(
     inputs.paths
       .map((filePath) => {
@@ -18,10 +19,14 @@ export async function save(
       }),
     cacheArchiveFile,
   );
+  console.timeEnd("Creating tar file");
+
+  console.time("Uploading file");
   await uploadFile(
     createClient(inputs.config),
     inputs.config,
     createSafeKey(inputs.saveKey, inputs.config.bucketPathPrefix),
     cacheArchiveFile,
   );
+  console.timeEnd("Uploading file");
 }
