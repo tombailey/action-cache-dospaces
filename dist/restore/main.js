@@ -56402,7 +56402,7 @@ async function restore(inputs, cacheArchiveFile = "action-cache-dospaces.tar.gz"
     console.log(
       `Restoring cache with key ${safeKeyToRestoreKey[relevantSafeKey]}`
     );
-    console.timeEnd("Downloading file");
+    console.time("Downloading file");
     await downloadFile(
       createClient(inputs.config),
       inputs.config,
