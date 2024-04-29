@@ -29,6 +29,9 @@ inputs:
   saveKey:
     description: "The key for cache to save (e.g. linux-x86-main)."
     default: ""
+  gzipCache:
+    description: "Whether or not to gzip the cache before saving. Defaults to false."
+    default: "false"
 runs:
   using: node20
   main: dist/restore/main.js

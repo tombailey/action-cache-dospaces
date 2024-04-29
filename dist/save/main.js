@@ -56341,12 +56341,14 @@ function getCommonInputs() {
   };
 }
 var saveKey = "saveKey";
+var gzipCache = "gzipCache";
 function getSaveInputs() {
   const paths = getRequiredInput("paths").split("\n");
   return {
     ...getCommonInputs(),
     paths,
-    saveKey: getRequiredInput(saveKey)
+    saveKey: getRequiredInput(saveKey),
+    gzip: getOptionalInput(gzipCache)?.toLowerCase() === "true"
   };
 }
 function getOptionalInput(name) {
@@ -56381,7 +56383,8 @@ async function save(inputs, cacheArchiveFile = "action-cache-dospaces.tar.gz") {
     }).filter((filePath) => {
       return fs.existsSync(filePath);
     }),
-    cacheArchiveFile
+    cacheArchiveFile,
+    inputs.gzip
   );
   console.timeEnd("Creating tar file");
   console.time("Uploading file");

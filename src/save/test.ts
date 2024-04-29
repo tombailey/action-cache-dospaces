@@ -17,5 +17,6 @@ const inputs: SaveInputs = {
     "/app/test_dir",
     "/app/missing",
   ],
+  gzip: false,
 };
 save(inputs).then(() => console.log("Done saving"));

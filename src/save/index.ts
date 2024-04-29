@@ -18,6 +18,7 @@ export async function save(
         return fs.existsSync(filePath);
       }),
     cacheArchiveFile,
+    inputs.gzip,
   );
   console.timeEnd("Creating tar file");
 
