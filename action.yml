@@ -1,0 +1,35 @@
+name: "action-cache-dospaces"
+description: "Cache workflow items for future re-use using CloudFlare's Spaces service."
+author: "tombailey"
+branding:
+  icon: "archive"
+  color: "gray-dark"
+inputs:
+  bucket:
+    description: "The name of your Spaces bucket."
+    required: true
+  endpoint:
+    description: "The endpoint for your Spaces bucket without the bucket's name (e.g. https://<DC>.digitaloceanspaces.com)."
+    required: true
+  accessKeyId:
+    description: "An access key id with read/write access to your Spaces bucket."
+    required: true
+  secretAccessKey:
+    description: "A secret access key with read/write access to your Spaces bucket."
+    required: true
+  paths:
+    description: "A list of files and directories to save."
+    required: true
+  bucketPathPrefix:
+    description: "An optional path prefix for cache files saved to your Spaces bucket (e.g. github/my-project/cache)."
+    default: ""
+  restoreKeys:
+    description: "The keys for caches to restore, in order of precedence (e.g. linux-x86-feature/myBranch,linux-x86-develop,linux-x86-main)."
+    default: ""
+  saveKey:
+    description: "The key for cache to save (e.g. linux-x86-main)."
+    default: ""
+runs:
+  using: node20
+  main: dist/restore/main.js
+  post: dist/save/main.js

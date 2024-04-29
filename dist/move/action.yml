@@ -1,0 +1,31 @@
+name: "action-cache-dospaces-move"
+description: "Moves action-cache-dospaces caches."
+author: "tombailey"
+branding:
+  icon: "archive"
+  color: "gray-dark"
+inputs:
+  bucket:
+    description: "The name of your Spaces bucket."
+    required: true
+  endpoint:
+    description: "The endpoint for your Spaces bucket without the bucket's name (e.g. https://<DC>.digitaloceanspaces.com)."
+    required: true
+  accessKeyId:
+    description: "An access key id with read/write access to your Spaces bucket."
+    required: true
+  secretAccessKey:
+    description: "A secret access key with read/write access to your Spaces bucket."
+    required: true
+  bucketPathPrefix:
+    description: "An optional path prefix for cache files saved to your Spaces bucket (e.g. github/my-project/cache)."
+    default: ""
+  sourceKey:
+    description: "The key for the cache to move (e.g. linux-x86-feature/myBranch)."
+    required: true
+  targetKey:
+    description: "The key for cache to save, in order of precedence (e.g. linux-x86-main)."
+    required: true
+runs:
+  using: node20
+  main: ../../dist/move/main.js

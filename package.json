@@ -1,0 +1,46 @@
+{
+  "name": "action-cache-dospaces",
+  "description": "GitHub Actions Cache DigitalOcean Spaces",
+  "version": "0.1.0",
+  "author": "",
+  "private": true,
+  "homepage": "https://github.com/tombailey/action-cache-dospaces",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tombailey/action-cache-dospaces.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tombailey/action-cache-dospaces/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "bundle": "npm run format:write && npm run package:move && npm run package:restore && npm run package:save",
+    "format:write": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "package:move": "esbuild ./src/move/main.ts --bundle --outfile=./dist/move/main.js --platform=node --target=node20.12.0 && copyfiles -f ./src/move/action.yml ./dist/move",
+    "package:restore": "esbuild ./src/restore/main.ts --bundle --outfile=./dist/restore/main.js --platform=node --target=node20.12.0 && copyfiles -f ./src/restore/action.yml ./dist/restore",
+    "package:save": "esbuild ./src/save/main.ts --bundle --outfile=./dist/save/main.js --platform=node --target=node20.12.0 && copyfiles -f ./src/save/action.yml ./dist/save",
+    "test:move": "ts-node ./src/move/test.ts",
+    "test:restore": "ts-node ./src/restore/test.ts",
+    "test:save": "ts-node ./src/save/test.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "1.10.1",
+    "@aws-sdk/client-s3": "3.540.0",
+    "tar": "6.2.1",
+    "untildify": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/tar": "^6.1.13",
+    "copyfiles": "^2.4.1",
+    "esbuild": "0.20.2",
+    "prettier": "^3.2.5",
+    "prettier-eslint": "^16.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  }
+}
