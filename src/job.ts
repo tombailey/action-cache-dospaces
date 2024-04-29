@@ -34,9 +34,11 @@ export function getRestoreInputs(): RestoreInputs {
 export type SaveInputs = CommonInputs & {
   saveKey: string;
   paths: string[];
+  gzip: boolean;
 };
 
 export const saveKey = "saveKey";
+export const gzipCache = "gzipCache";
 
 export function getSaveInputs(): SaveInputs {
   const paths = getRequiredInput("paths").split("\n");
@@ -44,6 +46,7 @@ export function getSaveInputs(): SaveInputs {
     ...getCommonInputs(),
     paths,
     saveKey: getRequiredInput(saveKey),
+    gzip: getOptionalInput(gzipCache)?.toLowerCase() === "true",
   };
 }
 
