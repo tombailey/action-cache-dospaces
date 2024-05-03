@@ -1,5 +1,5 @@
 name: "action-cache-dospaces"
-description: "Cache workflow items for future re-use using CloudFlare's Spaces service."
+description: "Cache workflow items for future re-use using DigitalOcean's Spaces service."
 author: "tombailey"
 branding:
   icon: "archive"
